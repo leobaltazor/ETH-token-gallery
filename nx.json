@@ -13,6 +13,9 @@
     },
     "eth-token-gallery": {
       "tags": []
+    },
+    "api": {
+      "tags": []
     }
   }
 }

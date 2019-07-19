@@ -26,7 +26,9 @@
               "apps/eth-token-gallery/src/favicon.ico",
               "apps/eth-token-gallery/src/assets"
             ],
-            "styles": ["apps/eth-token-gallery/src/styles.scss"],
+            "styles": [
+              "apps/eth-token-gallery/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -59,7 +61,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "eth-token-gallery:build"
+            "browserTarget": "eth-token-gallery:build",
+            "proxyConfig": "apps/eth-token-gallery/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -80,7 +83,10 @@
               "apps/eth-token-gallery/tsconfig.app.json",
               "apps/eth-token-gallery/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/eth-token-gallery/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/eth-token-gallery/**"
+            ]
           }
         },
         "test": {
@@ -115,7 +121,69 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/eth-token-gallery-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**", "!apps/eth-token-gallery-e2e/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/eth-token-gallery-e2e/**"
+            ]
+          }
+        }
+      }
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": [
+              "apps/api/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/api/tsconfig.app.json",
+              "apps/api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/api/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "tsConfig": "apps/api/tsconfig.spec.json"
           }
         }
       }
