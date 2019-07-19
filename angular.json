@@ -1,0 +1,141 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "eth-token-gallery": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/workspace:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/eth-token-gallery",
+      "sourceRoot": "apps/eth-token-gallery/src",
+      "prefix": "eth-token-gallery",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/eth-token-gallery",
+            "index": "apps/eth-token-gallery/src/index.html",
+            "main": "apps/eth-token-gallery/src/main.ts",
+            "polyfills": "apps/eth-token-gallery/src/polyfills.ts",
+            "tsConfig": "apps/eth-token-gallery/tsconfig.app.json",
+            "assets": [
+              "apps/eth-token-gallery/src/favicon.ico",
+              "apps/eth-token-gallery/src/assets"
+            ],
+            "styles": ["apps/eth-token-gallery/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/eth-token-gallery/src/environments/environment.ts",
+                  "with": "apps/eth-token-gallery/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "eth-token-gallery:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "eth-token-gallery:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "eth-token-gallery:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/eth-token-gallery/tsconfig.app.json",
+              "apps/eth-token-gallery/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/eth-token-gallery/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/eth-token-gallery/jest.config.js",
+            "tsConfig": "apps/eth-token-gallery/tsconfig.spec.json",
+            "setupFile": "apps/eth-token-gallery/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "eth-token-gallery-e2e": {
+      "root": "apps/eth-token-gallery-e2e",
+      "sourceRoot": "apps/eth-token-gallery-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/eth-token-gallery-e2e/cypress.json",
+            "tsConfig": "apps/eth-token-gallery-e2e/tsconfig.e2e.json",
+            "devServerTarget": "eth-token-gallery:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "eth-token-gallery:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/eth-token-gallery-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**", "!apps/eth-token-gallery-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "eth-token-gallery"
+}
